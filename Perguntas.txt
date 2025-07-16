@@ -1,0 +1,68 @@
+Recebem a quantidade de pedidos do total do mes.
+Baseado nisso é feita a distribuição da semana 
+a programação do sequenciamento de quais bicicletas precisam ser pintadas
+
+A dificuldade ocorre quando chegam novos pedidos ou falta insumos;
+Dessa forma, deve ser feita uma revisão na programação;
+
+Hoje eles possuem estoque, assim, ocorre de chegar alguns 
+pedidos que podem ser atendidos pelo estoque atual. 
+
+Simulação de como deve ser o comportamento:
+
+Exemplo =Outubro=
+
+Chegou um total de pedidos:
+Supondo que recebi um total de 2000 pedidos para o mes de maio da bicicleta Aro 12. 
+É realizada a destribuição semanal. Assim, a medida que forem chegando
+mais pedidos ou faltar insumos num determinado dia, é realizada uma revisão
+do Planejamento.
+
+É nessa fase que olha a complexidade/restrições de cada modelo
+
+
+Coluna de tempo por unidade e Modelo (SIMULADOR  de Planejamento Diário Pintura - MAIO)
+e adicionar na tabela Estrutura;
+
+A ideia é produzir o máximo de produtos possivel no dia ou semana
+afim de evitar tantas trocas;
+
+Dados sobre a capacidade dos robos
+
+Criar uma matriz de custo e cores
+
+============================================================
+
+Arquivo: Estruturas – Produto x Tinta Pó.xlsx 
+
+Descrição: Arquivo criado para relacionar os produtos x tintas utilizadas. 
+Neste arquivo temos as tintas utilizadas e qual parte da bicicleta possui 
+determinada tinta.
+
+Nossa primeira dúvida surgiu justamente esse ponto:
+Sobre 'qual parte da bicicleta possui determinada tinta'
+
+Mas, quando olhamos para essa tabela, nós só temos 
+os produtos x tintas utilizadas.
+
+Então, não conseguimos mapear as partes dos produtos
+dos produtos (que no caso seriam,garfo, guidão, quadro).
+
+E, de lembrar que essas informações vcs possuem na 
+SIMULADOR  de Planejamento Diário Pintura - MAIO.
+
+
+CODIGO_COMPONENTE: Código da tinta a ser utilizada no produto 
+
+Esclarecer essa informação na coluna Estruturas – Produto x Tinta Pó.
+
+
+Anteriomente, achamos que essa coluna era referente ao codigo filho
+ou codigo CODIGO_COMPONENTE a ser pentado e não o código da tinta
+
+Nesse caso, precisamos dos componentes que são pintados que estão na
+planilha SIMULADOR de Planejamento Diário Pintura - MAIO(27 MAIO) 
+
+
+
+Extração dos dados da planilha 

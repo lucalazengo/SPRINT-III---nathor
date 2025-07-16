@@ -1,0 +1,7 @@
+.venv/
+temasa
+jssp
+data/
+data/processed
+dashboard/pages/__pycache__
+src/__pycache__
