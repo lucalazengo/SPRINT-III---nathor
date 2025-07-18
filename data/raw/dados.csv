@@ -1,0 +1,38 @@
+Componente;Linha;Peças p/ gancheira;Espaçamento;PINOS ;Estoque Gancheiras;Altura;Largura;Peso (kg)
+Pedivela 12;Aro 12;44;0,80;1;150;1,53;60c;2,500
+Quadro 12;Aro 12;8;0,90;1;166;1,75;30c;2,300
+Garfo 12;Aro 12;24;1,20;1;114;1,75;73c ;5,400
+Guidão 12;Aro 12;26;1,20;1;116;1,94;23c;2,480
+Canote do Selim;Aro 16;26;0,80;1;116;1,94;23c;2,480
+Quadro 16;Aro 16;6;1,20;3;95;1,70;64c;2,400
+Guidão 16;Aro 16 ;26;1,20;2;116;1,94;23c;2,480
+Garfo 16;Aro 16;24;1,20;2;57;1,71;95c;4,260
+Tampa da Mesa 16;Aro 16;70;0,80;1;20;1,75;62c;8,000
+Abraçadeira 16;Aro 16;130;0,80;1;30;1,75;62c;8,000
+Guidão 16 DC;Aro 16;26;1,20;2;116;1,94;23c;2,480
+Garfo 16 DC;Aro 16;24;1,20;1;114;1,71;95c;4,260
+Quadro 16 DC;Aro 16;4;1,50;3;90;1,67;77c;2,500
+Quadro Triciclo;Triciclo;14;1,20;2;80;1,81;13c;3,400
+Guidão Triciclo;Triciclo;26;1,20;2;116;1,94;23c;2,400
+Eixo Triciclo;Triciclo;26;0,80;1;116;1,94;23c;2,400
+Quadro 14;Aro 14;6;1,20;2;55;1,65;56c;2,200
+Garfo 14;Aro 14;24;1,20;2;114;1,71;95c;4,260
+Guidão 14;Aro 14;26;1,20;2;116;1,94;23c;2,480
+Quadro Balance Aluminio;Balance Aluminio;4;1,20;2;30;1,38;54c;2,000
+Quadro Balance;Balance;12;1,20;3;96;1,75;35c;2,600
+Guidão Balance;Balance;26;0,80;1;116;1,94;23c;2,480
+Garfo Balance;Balance;24;0,80;1;114;1,75;73c;5,240
+Quadro 20;Aro 20;4;1,45;3;93;1,67;77c;2,500
+Garfo 20;Aro 20;16;1,15;2;34;1,51;92c;6,600
+Guidão 20;Aro 20;12;1,56;2;116;1,94;23c;2,480
+Quadro 26;Aro 26;1;1,00;;;;;
+Garfo 26;Aro 26;16;1,15;2;20;1,51;92c;6,600
+Guidão 26;Aro 26;12;1,56;3;62;1,81;34c;3,200
+Cestinha 26;Aro 26;4;1,18;2;13;1,16;17c;2,200
+Bagageiro 26;Aro 26;4;1,53;4;15;1,16;62c;0,700
+Eixo Triciclo;Aro 26;16;0,80;1;6;1,56;70c;8,000
+Paralama Dianteiro 20;Aro 20;12;1,20;2;;;;
+Paralama Traseiro 20;Aro 20;6;1,20;2;;;;
+Roda Aro 16;Aro 16;16;1,20;2;;;;
+Roda Aro 20;Aro 20;16;0,80;;;;;
+espaçamento;-;1;2;;;;;

@@ -1,0 +1,12 @@
+- Monovia de pintura - 180 metros
+- Tempo total da monovia - 90 minutos
+- Passos da monovia: Abastecimento, lavação das peças, pintura, curar, esfriar, sair.
+- Tempo entre abastecimento e pintura - 45 minutos.
+- Horário de funcionamento do robô: das 5h10 às 23h45.
+- A noite no final do expediente eles limpam a cabine de pintura e já deixam o produto do dia seguinte posicionado na entrada da cabine de pintura, para não levar os 45 minutos informados acima. Ou seja, pelas 23h00 é abastecido o produto que será pintado no dia seguinte, ele leva 45 minutos até chegar na entrada do robô aprox. as 23h45. Aí eles fazem a limpeza da cabine antes de encerrar o expediente as 00h00.
+- Tempo de troca de cor: média de 15 minutos. As cores não interferem no tempo, podem considerar a média de 15 minutos por troca de cor.
+- Tempo de troca de peça: média de 3 minutos.
+- Eles possuem dois robôs, o antigo e o novo. Somente o robô novo está em uso, o antigo é apenas para emergência quando o robô novo não puder pintar.
+
+
+considerar cobre como familia de cor preto fosco
