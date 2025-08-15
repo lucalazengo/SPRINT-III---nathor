@@ -28,7 +28,7 @@ def render_page():
                 'max_iterations': st.number_input("Iterações Máximas", value=100)
             }
     if uploaded_file:
-        st.subheader("Passo 2: Gerar Cronograma")
+        st.subheader("Gerar Cronograma")
         if st.button("Executar Otimização", type="primary", use_container_width=True):
             with st.spinner("Preparando dados..."):
                 tarefas = data_handler.prepare_task_list(uploaded_file, st.session_state['df_estruturas'])
