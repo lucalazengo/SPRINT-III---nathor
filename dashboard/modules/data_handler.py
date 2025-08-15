@@ -16,7 +16,7 @@ def load_structures_data(path):
         return None
 
 def prepare_task_list(uploaded_file, df_estruturas):
-    """Lê o arquivo de pedidos, junta com as estruturas e gera a lista de tarefas, com tratamento de dados robusto."""
+    """Lê o arquivo de pedidos, junta com as estruturas e gera a lista de tarefas, alinhada com a lógica final."""
     if uploaded_file is None or df_estruturas is None:
         return []
 
@@ -35,7 +35,8 @@ def prepare_task_list(uploaded_file, df_estruturas):
         if necessidade > 0:
             componentes = df_estruturas[df_estruturas['CODIGO_PRODUTO'] == pedido['CODIGO_PRODUTO']]
             for _, comp in componentes.iterrows():
-                if pd.isna(comp['DESCRICAO_COR']): continue
+                # CORRIGIDO: Usa a coluna correta 'DESC_COR'
+                if pd.isna(comp['DESC_COR']): continue
                 
                 # Tratamento robusto para valores individuais
                 raw_pecas_g = comp.get('Peças p/ gancheira')
@@ -54,10 +55,11 @@ def prepare_task_list(uploaded_file, df_estruturas):
 
                 tarefa = {
                     'DESCRICAO_PRODUTO': pedido.get('DESCRICAO_PRODUTO', 'N/A'),
-                    'DESCRICAO_COMPONENTE': comp.get('DESCRICAO_COMPONENTE', 'N/A'),
+                    'Componente': comp.get('Componente', 'N/A'),
                     'CODIGO_PRODUTO_FINAL': pedido['CODIGO_PRODUTO'],
+                    'CODIGO_PRODUTO': comp['CODIGO_COMPONENTE'], # Mantido para compatibilidade com o optimizer
                     'CODIGO_COMPONENTE': comp['CODIGO_COMPONENTE'],
-                    'Tinta': comp['DESCRICAO_COR'],
+                    'Tinta': comp['DESC_COR'], # CORRIGIDO: Usa a coluna correta
                     'Quantidade_Planejada': necessidade,
                     'Saldo': pedido.get('Saldo', 0),
                     'Estoque': pedido['Estoque'],
@@ -65,7 +67,7 @@ def prepare_task_list(uploaded_file, df_estruturas):
                     'Data_de_Entrega': pedido['Data_Entrega'],
                     'Tempo_Calculado_Minutos': t_calc_min,
                     'Pecas_por_Gancheira': pecas_g,
-                    'Estoque Gancheiras': estoque_g
+                    'ESTOQUE_GANCHEIRA': estoque_g # CORRIGIDO: Nome da chave padronizado
                 }
                 lista_tarefas_pintura.append(tarefa)
     return lista_tarefas_pintura
