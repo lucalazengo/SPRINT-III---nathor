@@ -10,7 +10,7 @@ def render_page():
 
     # --- Verificação de pré-requisito: um cronograma deve existir ---
     if 'cronograma_final' not in st.session_state or not st.session_state['cronograma_final']:
-        st.warning("🚨 Nenhum cronograma foi gerado ainda. Por favor, vá para a página de 'Planejamento' e gere um cronograma primeiro.", icon="⚠️")
+        st.warning(" Nenhum cronograma foi gerado ainda. Por favor, vá para a página de 'Planejamento' e gere um cronograma primeiro.", icon="⚠️")
         st.stop()
 
     # --- Inicialização dos dados de progresso ---

@@ -16,7 +16,7 @@ def load_structures_data(path):
         return None
 
 def prepare_task_list(uploaded_file, df_estruturas):
-    """Lê o arquivo de pedidos, junta com as estruturas e gera a lista de tarefas, agora enriquecida."""
+    """Lê o arquivo de pedidos, junta com as estruturas e gera a lista de tarefas, com tratamento de dados robusto."""
     if uploaded_file is None or df_estruturas is None:
         return []
 
@@ -37,24 +37,35 @@ def prepare_task_list(uploaded_file, df_estruturas):
             for _, comp in componentes.iterrows():
                 if pd.isna(comp['DESCRICAO_COR']): continue
                 
-                pecas_g = pd.to_numeric(comp.get('Peças p/ gancheira', 1), errors='coerce')
-                espac = pd.to_numeric(comp.get('Espaçamento', 0.5), errors='coerce')
+                # Tratamento robusto para valores individuais
+                raw_pecas_g = comp.get('Peças p/ gancheira')
+                numeric_pecas_g = pd.to_numeric(raw_pecas_g, errors='coerce')
+                pecas_g = 1 if pd.isna(numeric_pecas_g) or numeric_pecas_g == 0 else int(numeric_pecas_g)
                 
-                t_calc_min = ((necessidade / pecas_g) * espac) / VELOCIDADE_MONOVIA if pecas_g and espac and pecas_g > 0 else 0
+                raw_estoque_g = comp.get('Estoque Gancheiras')
+                numeric_estoque_g = pd.to_numeric(raw_estoque_g, errors='coerce')
+                estoque_g = 0 if pd.isna(numeric_estoque_g) else int(numeric_estoque_g)
+
+                raw_espac = comp.get('Espaçamento')
+                numeric_espac = pd.to_numeric(raw_espac, errors='coerce')
+                espac = 0.5 if pd.isna(numeric_espac) else float(numeric_espac)
+                
+                t_calc_min = ((necessidade / pecas_g) * espac) / VELOCIDADE_MONOVIA
 
                 tarefa = {
                     'DESCRICAO_PRODUTO': pedido.get('DESCRICAO_PRODUTO', 'N/A'),
                     'DESCRICAO_COMPONENTE': comp.get('DESCRICAO_COMPONENTE', 'N/A'),
-                    'Saldo': pedido.get('Saldo', 0),
-                    'Saldo Final': pedido.get('Saldo Final', 0),                    
                     'CODIGO_PRODUTO_FINAL': pedido['CODIGO_PRODUTO'],
                     'CODIGO_COMPONENTE': comp['CODIGO_COMPONENTE'],
                     'Tinta': comp['DESCRICAO_COR'],
                     'Quantidade_Planejada': necessidade,
+                    'Saldo': pedido.get('Saldo', 0),
                     'Estoque': pedido['Estoque'],
                     'Pedidos': pedido['Pedidos'],
                     'Data_de_Entrega': pedido['Data_Entrega'],
-                    'Tempo_Calculado_Minutos': t_calc_min
+                    'Tempo_Calculado_Minutos': t_calc_min,
+                    'Pecas_por_Gancheira': pecas_g,
+                    'Estoque Gancheiras': estoque_g
                 }
                 lista_tarefas_pintura.append(tarefa)
     return lista_tarefas_pintura
