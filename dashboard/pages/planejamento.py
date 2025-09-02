@@ -28,7 +28,7 @@ def render_page():
                 'max_iterations': st.number_input("Iterações Máximas", value=100)
             }
     if uploaded_file:
-        st.subheader("Gerar Cronograma")
+        st.subheader("Passo 2: Gerar Cronograma")
         if st.button("Executar Otimização", type="primary", use_container_width=True):
             with st.spinner("Preparando dados..."):
                 tarefas = data_handler.prepare_task_list(uploaded_file, st.session_state['df_estruturas'])
@@ -37,7 +37,8 @@ def render_page():
                 st.session_state['cronograma_final'] = cronograma
                 st.session_state['tarefas_rejeitadas'] = rejeitados
             st.success("Otimização concluída!")
-            st.balloons()
+            # REMOVIDO: A linha st.balloons() foi retirada daqui.
+            
     if 'cronograma_final' in st.session_state:
         st.divider()
         st.header("Passo 3: Análise dos Resultados")
