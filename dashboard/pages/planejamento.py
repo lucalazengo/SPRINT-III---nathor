@@ -7,7 +7,7 @@ import io
 from datetime import datetime
 
 def render_page():
-    """Renderiza a página de planejamento com uma arquitetura de abas robusta."""
+    """Renderiza a página de planejamento com a lógica de adição manual corrigida."""
     
     # --- 1. INICIALIZAÇÃO E CARGA DE DADOS ---
     df_estruturas = st.session_state.get('df_estruturas')
@@ -15,10 +15,10 @@ def render_page():
         st.error("Dados de estruturas não carregados. Por favor, reinicie a aplicação.")
         st.stop()
 
-    if 'CODIGO_PRODUTO' in df_estruturas.columns:
-        df_estruturas['CODIGO_PRODUTO_STR'] = df_estruturas['CODIGO_PRODUTO'].astype('Int64').astype(str)
+    if 'df_estruturas' in st.session_state and 'CODIGO_PRODUTO' in st.session_state.df_estruturas.columns:
+        st.session_state.df_estruturas['CODIGO_PRODUTO_STR'] = st.session_state.df_estruturas['CODIGO_PRODUTO'].astype('Int64').astype(str)
 
-    # Inicializa os estados da sessão para persistência dos dados
+    # Inicializa os estados da sessão
     if 'manual_orders' not in st.session_state: st.session_state.manual_orders = pd.DataFrame()
     if 'uploaded_orders' not in st.session_state: st.session_state.uploaded_orders = pd.DataFrame()
     if 'tarefas_calibradas' not in st.session_state: st.session_state.tarefas_calibradas = pd.DataFrame()
@@ -44,47 +44,61 @@ def render_page():
             st.session_state.manual_orders = pd.DataFrame() # Prioriza o arquivo carregado
             st.success(f"Arquivo '{uploaded_file.name}' carregado. Vá para a aba 'Revisar, Calibrar e Otimizar'.")
 
-        with tab2:
-            codigo_produto_input = st.text_input(
-                "Digite o Código do Produto e clique Enter", 
-                placeholder="Aguardando código...",
-                help="Após digitar o código, pressione Enter para buscar a descrição."
-            )
-            descricao_encontrada = ""
-            produto_valido = False
-            if codigo_produto_input:
-                match = df_estruturas[df_estruturas['CODIGO_PRODUTO_STR'] == codigo_produto_input.strip()]
-                if not match.empty:
-                    descricao_encontrada = match['DESCRICAO_PRODUTO'].iloc[0]
-                    produto_valido = True
-                    st.info(f"Produto encontrado: **{descricao_encontrada}**")
-                else:
-                    st.warning("Código do produto não encontrado.")
+    with tab2:
+        st.subheader("Adicionar um Pedido Individual")
+        
+        codigo_produto_input = st.text_input(
+            "Digite o Código do Produto e clique Enter", 
+            placeholder="Aguardando código...",
+            help="Após digitar o código, pressione Enter para buscar a descrição do produto."
+        )
+
+        descricao_encontrada = ""
+        produto_valido = False
+        if codigo_produto_input:
+            match = df_estruturas[df_estruturas['CODIGO_PRODUTO_STR'] == codigo_produto_input.strip()]
+            if not match.empty:
+                descricao_encontrada = match['DESCRICAO_PRODUTO'].iloc[0]
+                produto_valido = True
+                st.info(f"Produto encontrado: **{descricao_encontrada}**")
+            else:
+                st.warning("Código do produto não encontrado na base de estruturas.")
+        
+        with st.form("form_add_pedido", clear_on_submit=True):
+            st.text_input("Descrição do Produto", value=descricao_encontrada, disabled=True)
             
-            with st.form("form_add_pedido", clear_on_submit=True):
-                st.text_input("Descrição do Produto", value=descricao_encontrada, disabled=True)
-                col_form1, col_form2 = st.columns(2)
-                pedidos = col_form1.number_input("Quantidade de Pedidos", min_value=1, step=10)
-                estoque = col_form2.number_input("Estoque Atual", min_value=0, step=10)
-                data_entrega = st.date_input("Data de Entrega", min_value=datetime.today())
-                
-                submitted = st.form_submit_button(
-                    "➕ Confirmar Adição do Pedido", 
-                    use_container_width=True,
-                    disabled=not produto_valido
-                )
-                if submitted:
-                    novo_pedido = {
-                        "CODIGO_PRODUTO": codigo_produto_input.strip(),
-                        "DESCRICAO_PRODUTO": descricao_encontrada,
-                        "Pedidos": int(pedidos), "Estoque": int(estoque),
-                        "Data_Entrega": data_entrega.strftime('%d/%m/%Y')
-                    }
-                    st.session_state.manual_orders.append(novo_pedido)
-                    st.session_state.tarefas_calibradas = pd.DataFrame()
-                    st.toast(f"Pedido para '{descricao_encontrada}' adicionado!", icon="👍")
+            col_form1, col_form2 = st.columns(2)
+            pedidos = col_form1.number_input("Quantidade de Pedidos", min_value=1, step=10)
+            estoque = col_form2.number_input("Estoque Atual", min_value=0, step=10)
+            data_entrega = st.date_input("Data de Entrega", min_value=datetime.today())
+            
+            submitted = st.form_submit_button(
+                "➕ Confirmar Adição do Pedido", 
+                use_container_width=True,
+                disabled=not produto_valido
+            )
+            
+            if submitted:
+                # --- CORREÇÃO APLICADA AQUI ---
+                # Garante que o dicionário do novo pedido tenha todas as colunas
+                # esperadas pelo data_handler, espelhando a estrutura do CSV.
+                saldo = int(estoque) - int(pedidos)
+                novo_pedido = {
+                    "CODIGO_PRODUTO": codigo_produto_input.strip(),
+                    "DESCRICAO_PRODUTO": descricao_encontrada,
+                    "Pedidos": int(pedidos),
+                    "Estoque": int(estoque),
+                    "Saldo": saldo,
+                    "Saldo Final": saldo, # Assumindo que o Saldo Final é o mesmo do Saldo inicial para um novo pedido
+                    "Data_Entrega": data_entrega.strftime('%d/%m/%Y')
+                }
+                novo_pedido_df = pd.DataFrame([novo_pedido])
+                st.session_state.manual_orders = pd.concat([st.session_state.manual_orders, novo_pedido_df], ignore_index=True)
+                st.session_state.uploaded_orders = pd.DataFrame() # Prioriza a entrada manual
+                st.toast(f"Pedido para '{descricao_encontrada}' adicionado!", icon="👍")
     
     with tab3:
+
         st.subheader("Pedidos a Serem Otimizados")
         
         df_pedidos_fonte = pd.DataFrame()
