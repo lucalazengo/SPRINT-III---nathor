@@ -1,3 +1,14 @@
+Com certeza. O `README.md` é o cartão de visitas de um projeto de software. Ele deve ser conciso, direto e fornecer a um novo usuário ou desenvolvedor todas as informações essenciais para entender e executar o projeto rapidamente.
+
+Criei um `README.md` alinhado ao manual de execução, mas com um formato mais direto e focado na praticidade, como é o padrão para este tipo de documento.
+
+-----
+
+### Arquivo `README.md`
+
+**Ação:** Crie um novo arquivo chamado `README.md` no diretório raiz do seu projeto (`SPRINT III - nathor/`) e cole o conteúdo abaixo.
+
+```markdown
 # Otimizador de Pintura Nathor | PCP Inteligente
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
@@ -18,15 +29,19 @@ O projeto é dividido em duas partes principais:
 
 A estrutura de diretórios foi organizada para separar dados, lógica e interface:
 
+```
+
 /
-├── dashboard/      # Código da aplicação Streamlit
-│   ├── app.py      # Ponto de entrada principal da aplicação
-│   ├── pages/      # Páginas da aplicação (Planejamento, Acompanhamento)
-│   └── modules/    # Módulos de lógica (optimizer, data_handler, pipelines)
+├── dashboard/      \# Código da aplicação Streamlit
+│   ├── app.py      \# Ponto de entrada principal da aplicação
+│   ├── pages/      \# Páginas da aplicação (Planejamento, Acompanhamento)
+│   └── modules/    \# Módulos de lógica (optimizer, data\_handler, pipelines)
 ├── data/
-│   ├── raw/        # Local para os arquivos de dados brutos (entrada)
-│   └── processed/  # Datasets limpos e consolidados (saída dos pipelines)
-└── notebooks/      # Notebooks utilizados para análise e desenvolvimento
+│   ├── raw/        \# Local para os arquivos de dados brutos (entrada)
+│   └── processed/  \# Datasets limpos e consolidados (saída dos pipelines)
+└── notebooks/      \# Notebooks utilizados para análise e desenvolvimento
+
+````
 
 ## 3. Guia de Instalação e Execução
 
@@ -84,29 +99,34 @@ python dashboard/modules/pipeline_dados.py
 
 # Para gerar o arquivo consolidado de pedidos
 python dashboard/modules/pedidos.py
-Passo 5: Execução da Aplicação Principal
-No terminal, certifique-se de estar no diretório dashboard.
+````
 
-Execute o seguinte comando para iniciar a aplicação Streamlit:
+### Passo 5: Execução da Aplicação Principal
 
-streamlit run app.py
+1.  No terminal, certifique-se de estar no diretório `dashboard`.
+2.  Execute o seguinte comando para iniciar a aplicação Streamlit:
+    ```bash
+    streamlit run app.py
+    ```
+3.  A aplicação será aberta automaticamente no seu navegador.
 
-4. Arquivos Gerados (Saídas)
-A execução dos pipelines e da aplicação irá gerar os seguintes arquivos no diretório data/processed/:
+## 4\. Arquivos Gerados (Saídas)
 
-Planilha_Estruturas - Produto_Cor_Dim.csv: O dataset mestre de engenharia, principal fonte de dados para a aplicação.
+A execução dos pipelines e da aplicação irá gerar os seguintes arquivos no diretório `data/processed/`:
 
-pedidos_consolidados.csv: O arquivo de pedidos consolidado, usado como entrada na aplicação.
+  * `Planilha_Estruturas - Produto_Cor_Dim.csv`: O dataset mestre de engenharia, principal fonte de dados para a aplicação.
+  * `pedidos_consolidados.csv`: O arquivo de pedidos consolidado, usado como entrada na aplicação.
+  * `cronograma_dia_X.xlsx` / `.csv`: Os planos de produção detalhados para cada dia, gerados pela aplicação.
+  * `relatorio_excecoes.xlsx`: Relatório com as ordens que não puderam ser planejadas e os respectivos motivos.
+  * `pipeline_log.txt`: Log de execução do pipeline de engenharia de dados.
 
-cronograma_dia_X.xlsx / .csv: Os planos de produção detalhados para cada dia, gerados pela aplicação.
+## 5\. Próximos Passos e Recomendações
 
-relatorio_excecoes.xlsx: Relatório com as ordens que não puderam ser planejadas e os respectivos motivos.
+  * **Qualidade dos Dados:** A performance do otimizador depende diretamente da qualidade dos dados brutos. É crucial manter esses arquivos atualizados e consistentes.
+  * **Regras de Negócio:** Para alterar capacidades de produção (`FORNECIMENTO_METALURGIA`, `CAPACIDADE_GAIOLAS`, etc.), a melhor prática é criar e manter um arquivo `regras_de_negocio.xlsx` em `data/processed/`, conforme a lógica implementada no pipeline.
+  * **Evolução:** Para um ambiente de produção contínuo, recomenda-se substituir a leitura de arquivos CSV por conexões diretas ao banco de dados da empresa (ERP).
 
-pipeline_log.txt: Log de execução do pipeline de engenharia de dados.
+<!-- end list -->
 
-5. Próximos Passos e Recomendações
-Qualidade dos Dados: A performance do otimizador depende diretamente da qualidade dos dados brutos. É crucial manter esses arquivos atualizados e consistentes.
-
-Regras de Negócio: Para alterar capacidades de produção (FORNECIMENTO_METALURGIA, CAPACIDADE_GAIOLAS, etc.), a melhor prática é criar e manter um arquivo regras_de_negocio.xlsx em data/processed/, conforme a lógica implementada no pipeline.
-
-Evolução: Para um ambiente de produção contínuo, recomenda-se substituir a leitura de arquivos CSV por conexões diretas ao banco de dados da empresa (ERP).
+```
+```
